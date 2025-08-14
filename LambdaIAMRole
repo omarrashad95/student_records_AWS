@@ -1,0 +1,1021 @@
+{
+  "partial": false,
+  "policies": [
+    {
+      "type": "managed",
+      "name": "CloudWatchLogsFullAccess",
+      "arn": "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+      "id": "ANPAJ3ZGNWK2R5HW5BQFO",
+      "document": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "CloudWatchLogsFullAccess",
+            "Effect": "Allow",
+            "Action": [
+              "logs:*",
+              "cloudwatch:GenerateQuery",
+              "cloudwatch:GenerateQueryResultsSummary"
+            ],
+            "Resource": "*"
+          }
+        ]
+      }
+    },
+    {
+      "type": "managed",
+      "name": "AmazonDynamoDBFullAccess",
+      "arn": "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess",
+      "id": "ANPAINUGF2JSOSUY76KYA",
+      "document": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": [
+              "dynamodb:*",
+              "dax:*",
+              "application-autoscaling:DeleteScalingPolicy",
+              "application-autoscaling:DeregisterScalableTarget",
+              "application-autoscaling:DescribeScalableTargets",
+              "application-autoscaling:DescribeScalingActivities",
+              "application-autoscaling:DescribeScalingPolicies",
+              "application-autoscaling:PutScalingPolicy",
+              "application-autoscaling:RegisterScalableTarget",
+              "cloudwatch:DeleteAlarms",
+              "cloudwatch:DescribeAlarmHistory",
+              "cloudwatch:DescribeAlarms",
+              "cloudwatch:DescribeAlarmsForMetric",
+              "cloudwatch:GetMetricStatistics",
+              "cloudwatch:ListMetrics",
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:GetMetricData",
+              "datapipeline:ActivatePipeline",
+              "datapipeline:CreatePipeline",
+              "datapipeline:DeletePipeline",
+              "datapipeline:DescribeObjects",
+              "datapipeline:DescribePipelines",
+              "datapipeline:GetPipelineDefinition",
+              "datapipeline:ListPipelines",
+              "datapipeline:PutPipelineDefinition",
+              "datapipeline:QueryObjects",
+              "ec2:DescribeVpcs",
+              "ec2:DescribeSubnets",
+              "ec2:DescribeSecurityGroups",
+              "iam:GetRole",
+              "iam:ListRoles",
+              "kms:DescribeKey",
+              "kms:ListAliases",
+              "sns:CreateTopic",
+              "sns:DeleteTopic",
+              "sns:ListSubscriptions",
+              "sns:ListSubscriptionsByTopic",
+              "sns:ListTopics",
+              "sns:Subscribe",
+              "sns:Unsubscribe",
+              "sns:SetTopicAttributes",
+              "lambda:CreateFunction",
+              "lambda:ListFunctions",
+              "lambda:ListEventSourceMappings",
+              "lambda:CreateEventSourceMapping",
+              "lambda:DeleteEventSourceMapping",
+              "lambda:GetFunctionConfiguration",
+              "lambda:DeleteFunction",
+              "resource-groups:ListGroups",
+              "resource-groups:ListGroupResources",
+              "resource-groups:GetGroup",
+              "resource-groups:GetGroupQuery",
+              "resource-groups:DeleteGroup",
+              "resource-groups:CreateGroup",
+              "tag:GetResources",
+              "kinesis:ListStreams",
+              "kinesis:DescribeStream",
+              "kinesis:DescribeStreamSummary"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+          },
+          {
+            "Action": "cloudwatch:GetInsightRuleReport",
+            "Effect": "Allow",
+            "Resource": "arn:aws:cloudwatch:*:*:insight-rule/DynamoDBContributorInsights*"
+          },
+          {
+            "Action": [
+              "iam:PassRole"
+            ],
+            "Effect": "Allow",
+            "Resource": "*",
+            "Condition": {
+              "StringLike": {
+                "iam:PassedToService": [
+                  "application-autoscaling.amazonaws.com",
+                  "application-autoscaling.amazonaws.com.cn",
+                  "dax.amazonaws.com"
+                ]
+              }
+            }
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "iam:CreateServiceLinkedRole"
+            ],
+            "Resource": "*",
+            "Condition": {
+              "StringEquals": {
+                "iam:AWSServiceName": [
+                  "replication.dynamodb.amazonaws.com",
+                  "dax.amazonaws.com",
+                  "dynamodb.application-autoscaling.amazonaws.com",
+                  "contributorinsights.dynamodb.amazonaws.com",
+                  "kinesisreplication.dynamodb.amazonaws.com"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "managed",
+      "name": "AWSLambdaBasicExecutionRole-79934c60-7e07-4d6e-ac40-f3d200f57252",
+      "arn": "arn:aws:iam::448280330921:policy/service-role/AWSLambdaBasicExecutionRole-79934c60-7e07-4d6e-ac40-f3d200f57252",
+      "id": "ANPAWQX4XAKURPYV4KP24",
+      "document": {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "logs:CreateLogGroup",
+            "Resource": "arn:aws:logs:us-east-1:448280330921:*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": [
+              "arn:aws:logs:us-east-1:448280330921:log-group:/aws/lambda/Todo:*"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "resources": {
+    "logs": {
+      "service": {
+        "name": "Amazon CloudWatch Logs",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "logs",
+          "effect": "Allow",
+          "action": "logs:*",
+          "resource": "*",
+          "source": {
+            "policyName": "CloudWatchLogsFullAccess",
+            "policyType": "managed",
+            "index": "CloudWatchLogsFullAccess"
+          }
+        },
+        {
+          "service": "logs",
+          "effect": "Allow",
+          "action": "logs:CreateLogGroup",
+          "resource": "arn:aws:logs:us-east-1:448280330921:*",
+          "source": {
+            "policyName": "AWSLambdaBasicExecutionRole-79934c60-7e07-4d6e-ac40-f3d200f57252",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "logs",
+          "effect": "Allow",
+          "action": "logs:CreateLogStream",
+          "resource": "arn:aws:logs:us-east-1:448280330921:log-group:/aws/lambda/Todo:*",
+          "source": {
+            "policyName": "AWSLambdaBasicExecutionRole-79934c60-7e07-4d6e-ac40-f3d200f57252",
+            "policyType": "managed",
+            "index": "1"
+          }
+        },
+        {
+          "service": "logs",
+          "effect": "Allow",
+          "action": "logs:PutLogEvents",
+          "resource": "arn:aws:logs:us-east-1:448280330921:log-group:/aws/lambda/Todo:*",
+          "source": {
+            "policyName": "AWSLambdaBasicExecutionRole-79934c60-7e07-4d6e-ac40-f3d200f57252",
+            "policyType": "managed",
+            "index": "1"
+          }
+        }
+      ]
+    },
+    "cloudwatch": {
+      "service": {
+        "name": "Amazon CloudWatch",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "cloudwatch",
+          "effect": "Allow",
+          "action": "cloudwatch:GenerateQuery",
+          "resource": "*",
+          "source": {
+            "policyName": "CloudWatchLogsFullAccess",
+            "policyType": "managed",
+            "index": "CloudWatchLogsFullAccess"
+          }
+        },
+        {
+          "service": "cloudwatch",
+          "effect": "Allow",
+          "action": "cloudwatch:GenerateQueryResultsSummary",
+          "resource": "*",
+          "source": {
+            "policyName": "CloudWatchLogsFullAccess",
+            "policyType": "managed",
+            "index": "CloudWatchLogsFullAccess"
+          }
+        },
+        {
+          "service": "cloudwatch",
+          "effect": "Allow",
+          "action": "cloudwatch:DeleteAlarms",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "cloudwatch",
+          "effect": "Allow",
+          "action": "cloudwatch:DescribeAlarmHistory",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "cloudwatch",
+          "effect": "Allow",
+          "action": "cloudwatch:DescribeAlarms",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "cloudwatch",
+          "effect": "Allow",
+          "action": "cloudwatch:DescribeAlarmsForMetric",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "cloudwatch",
+          "effect": "Allow",
+          "action": "cloudwatch:GetMetricStatistics",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "cloudwatch",
+          "effect": "Allow",
+          "action": "cloudwatch:ListMetrics",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "cloudwatch",
+          "effect": "Allow",
+          "action": "cloudwatch:PutMetricAlarm",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "cloudwatch",
+          "effect": "Allow",
+          "action": "cloudwatch:GetMetricData",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "cloudwatch",
+          "effect": "Allow",
+          "action": "cloudwatch:GetInsightRuleReport",
+          "resource": "arn:aws:cloudwatch:*:*:insight-rule/DynamoDBContributorInsights*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "1"
+          }
+        }
+      ]
+    },
+    "dynamodb": {
+      "service": {
+        "name": "Amazon DynamoDB",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "dynamodb",
+          "effect": "Allow",
+          "action": "dynamodb:*",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        }
+      ]
+    },
+    "dax": {
+      "service": {
+        "name": "Amazon DynamoDB Accelerator (DAX)",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "dax",
+          "effect": "Allow",
+          "action": "dax:*",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        }
+      ]
+    },
+    "application-autoscaling": {
+      "service": {
+        "name": "AWS Application Auto Scaling",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "application-autoscaling",
+          "effect": "Allow",
+          "action": "application-autoscaling:DeleteScalingPolicy",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "application-autoscaling",
+          "effect": "Allow",
+          "action": "application-autoscaling:DeregisterScalableTarget",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "application-autoscaling",
+          "effect": "Allow",
+          "action": "application-autoscaling:DescribeScalableTargets",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "application-autoscaling",
+          "effect": "Allow",
+          "action": "application-autoscaling:DescribeScalingActivities",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "application-autoscaling",
+          "effect": "Allow",
+          "action": "application-autoscaling:DescribeScalingPolicies",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "application-autoscaling",
+          "effect": "Allow",
+          "action": "application-autoscaling:PutScalingPolicy",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "application-autoscaling",
+          "effect": "Allow",
+          "action": "application-autoscaling:RegisterScalableTarget",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        }
+      ]
+    },
+    "datapipeline": {
+      "service": {
+        "name": "AWS Data Pipeline",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "datapipeline",
+          "effect": "Allow",
+          "action": "datapipeline:ActivatePipeline",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "datapipeline",
+          "effect": "Allow",
+          "action": "datapipeline:CreatePipeline",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "datapipeline",
+          "effect": "Allow",
+          "action": "datapipeline:DeletePipeline",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "datapipeline",
+          "effect": "Allow",
+          "action": "datapipeline:DescribeObjects",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "datapipeline",
+          "effect": "Allow",
+          "action": "datapipeline:DescribePipelines",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "datapipeline",
+          "effect": "Allow",
+          "action": "datapipeline:GetPipelineDefinition",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "datapipeline",
+          "effect": "Allow",
+          "action": "datapipeline:ListPipelines",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "datapipeline",
+          "effect": "Allow",
+          "action": "datapipeline:PutPipelineDefinition",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "datapipeline",
+          "effect": "Allow",
+          "action": "datapipeline:QueryObjects",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        }
+      ]
+    },
+    "ec2": {
+      "service": {
+        "name": "Amazon EC2",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "ec2",
+          "effect": "Allow",
+          "action": "ec2:DescribeVpcs",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "ec2",
+          "effect": "Allow",
+          "action": "ec2:DescribeSubnets",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "ec2",
+          "effect": "Allow",
+          "action": "ec2:DescribeSecurityGroups",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        }
+      ]
+    },
+    "iam": {
+      "service": {
+        "name": "AWS Identity and Access Management (IAM)",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "iam",
+          "effect": "Allow",
+          "action": "iam:GetRole",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "iam",
+          "effect": "Allow",
+          "action": "iam:ListRoles",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "iam",
+          "effect": "Allow",
+          "action": "iam:PassRole",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "2"
+          }
+        },
+        {
+          "service": "iam",
+          "effect": "Allow",
+          "action": "iam:CreateServiceLinkedRole",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "3"
+          }
+        }
+      ]
+    },
+    "kms": {
+      "service": {
+        "name": "AWS Key Management Service",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "kms",
+          "effect": "Allow",
+          "action": "kms:DescribeKey",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "kms",
+          "effect": "Allow",
+          "action": "kms:ListAliases",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        }
+      ]
+    },
+    "sns": {
+      "service": {
+        "name": "Amazon SNS",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "sns",
+          "effect": "Allow",
+          "action": "sns:CreateTopic",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "sns",
+          "effect": "Allow",
+          "action": "sns:DeleteTopic",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "sns",
+          "effect": "Allow",
+          "action": "sns:ListSubscriptions",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "sns",
+          "effect": "Allow",
+          "action": "sns:ListSubscriptionsByTopic",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "sns",
+          "effect": "Allow",
+          "action": "sns:ListTopics",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "sns",
+          "effect": "Allow",
+          "action": "sns:Subscribe",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "sns",
+          "effect": "Allow",
+          "action": "sns:Unsubscribe",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "sns",
+          "effect": "Allow",
+          "action": "sns:SetTopicAttributes",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        }
+      ]
+    },
+    "lambda": {
+      "service": {
+        "name": "AWS Lambda",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "lambda",
+          "effect": "Allow",
+          "action": "lambda:CreateFunction",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "lambda",
+          "effect": "Allow",
+          "action": "lambda:ListFunctions",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "lambda",
+          "effect": "Allow",
+          "action": "lambda:ListEventSourceMappings",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "lambda",
+          "effect": "Allow",
+          "action": "lambda:CreateEventSourceMapping",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "lambda",
+          "effect": "Allow",
+          "action": "lambda:DeleteEventSourceMapping",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "lambda",
+          "effect": "Allow",
+          "action": "lambda:GetFunctionConfiguration",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "lambda",
+          "effect": "Allow",
+          "action": "lambda:DeleteFunction",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        }
+      ]
+    },
+    "resource-groups": {
+      "service": {
+        "name": "AWS Resource Groups",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "resource-groups",
+          "effect": "Allow",
+          "action": "resource-groups:ListGroups",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "resource-groups",
+          "effect": "Allow",
+          "action": "resource-groups:ListGroupResources",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "resource-groups",
+          "effect": "Allow",
+          "action": "resource-groups:GetGroup",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "resource-groups",
+          "effect": "Allow",
+          "action": "resource-groups:GetGroupQuery",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "resource-groups",
+          "effect": "Allow",
+          "action": "resource-groups:DeleteGroup",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "resource-groups",
+          "effect": "Allow",
+          "action": "resource-groups:CreateGroup",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        }
+      ]
+    },
+    "tag": {
+      "service": {
+        "name": "Amazon Resource Group Tagging API",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "tag",
+          "effect": "Allow",
+          "action": "tag:GetResources",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        }
+      ]
+    },
+    "kinesis": {
+      "service": {
+        "name": "Amazon Kinesis Data Streams",
+        "icon": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw"
+      },
+      "statements": [
+        {
+          "service": "kinesis",
+          "effect": "Allow",
+          "action": "kinesis:ListStreams",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "kinesis",
+          "effect": "Allow",
+          "action": "kinesis:DescribeStream",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        },
+        {
+          "service": "kinesis",
+          "effect": "Allow",
+          "action": "kinesis:DescribeStreamSummary",
+          "resource": "*",
+          "source": {
+            "policyName": "AmazonDynamoDBFullAccess",
+            "policyType": "managed",
+            "index": "0"
+          }
+        }
+      ]
+    }
+  },
+  "roleName": "LambdaRole",
+  "trustedEntities": [
+    "lambda.amazonaws.com"
+  ]
+}
