@@ -106,8 +106,3 @@ It leverages AWS managed services to provide scalability, security, and cost eff
 - **Cost-effective** – Pay only for usage.
 - **Highly Available** – AWS managed services handle redundancy.
 - **Secure** – Fine-grained IAM permissions.
-
----
-
-## License
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
