@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .student-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .student-id {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .student-info {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        .student-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .error {
+            background: #fff5f5;
+            color: #e53e3e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #e53e3e;
+        }
+
+        .success {
+            background: #f0fff4;
+            color: #38a169;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #38a169;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .students-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Student Management System</h1>
+            <p>Manage student records with ease</p>
+        </div>
+
+        <div class="main-content">
+            <div class="controls">
+                <button class="btn btn-primary" onclick="openAddModal()">
+                    ➕ Add Student
+                </button>
+                <button class="btn btn-secondary" onclick="loadStudents()">
+                    🔄 Refresh
+                </button>
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" 
+                           placeholder="🔍 Search by student ID, name, or email..." 
+                           oninput="filterStudents()">
+                </div>
+            </div>
+
+            <div id="message"></div>
+            <div id="studentsContainer">
+                <div class="loading">Loading students...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Student Modal -->
+    <div id="studentModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Add New Student</h2>
+            <form id="studentForm">
+                <div class="form-group">
+                    <label for="studentId">Student ID *</label>
+                    <input type="number" id="studentId" required>
+                </div>
+                <div class="form-group">
+                    <label for="firstName">First Name *</label>
+                    <input type="text" id="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name *</label>
+                    <input type="text" id="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="major">Major</label>
+                    <input type="text" id="major">
+                </div>
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <select id="year">
+                        <option value="">Select Year</option>
+                        <option value="Freshman">Freshman</option>
+                        <option value="Sophomore">Sophomore</option>
+                        <option value="Junior">Junior</option>
+                        <option value="Senior">Senior</option>
+                        <option value="Graduate">Graduate</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Save Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://hyu6ecehxc.execute-api.us-east-1.amazonaws.com/production';
+        let allStudents = [];
+        let isEditMode = false;
+        let editingStudentId = null;
+
+        // Load students on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStudents();
+        });
+
+        // API Functions
+        async function loadStudents() {
+            showMessage('Loading students...', 'info');
+            try {
+                const response = await fetch(`${API_BASE_URL}/students`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    allStudents = data.students || [];
+                    displayStudents(allStudents);
+                    showMessage(`Loaded ${allStudents.length} students successfully`, 'success');
+                } else {
+                    throw new Error(data.message || 'Failed to load students');
+                }
+            } catch (error) {
+                console.error('Error loading students:', error);
+                showMessage('Error loading students: ' + error.message, 'error');
+                document.getElementById('studentsContainer').innerHTML = 
+                    '<div class="error">Failed to load students. Please check your connection and try again.</div>';
+            }
+        }
+
+        async function saveStudent(studentData) {
+            try {
+                const url = `${API_BASE_URL}/student`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(studentData)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage('Student saved successfully!', 'success');
+                    closeModal();
+                    loadStudents();
+                } else {
+                    throw new Error(data.message || 'Failed to save student');
+                }
+            } catch (error) {
+                console.error('Error saving student:', error);
+                showMessage('Error saving student: ' + error.message, 'error');
+            }
+        }
+
+        async function updateStudent(studentId, updateKey, updateValue) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/student`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        studentId: studentId,
+                        updateKey: updateKey,
+                        updateValue: updateValue
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage('Student updated successfully!', 'success');
+                    loadStudents();
+                } else {
+                    throw new Error(data.message || 'Failed to update student');
+                }
+            } catch (error) {
+                console.error('Error updating student:', error);
+                showMessage('Error updating student: ' + error.message, 'error');
+            }
+        }
+
+        async function deleteStudent(studentId) {
+            if (!confirm('Are you sure you want to delete this student?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/student`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ studentId: studentId })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage('Student deleted successfully!', 'success');
+                    loadStudents();
+                } else {
+                    throw new Error(data.message || 'Failed to delete student');
+                }
+            } catch (error) {
+                console.error('Error deleting student:', error);
+                showMessage('Error deleting student: ' + error.message, 'error');
+            }
+        }
+
+        // UI Functions
+        function displayStudents(students) {
+            const container = document.getElementById('studentsContainer');
+            
+            if (students.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No students found</h3>
+                        <p>Click "Add Student" to create your first student record.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const studentsHTML = students.map(student => `
+                <div class="student-card">
+                    <div class="student-id">ID: ${student.studentid}</div>
+                    <div class="student-info">
+                        <strong>${student.firstName || 'N/A'} ${student.lastName || 'N/A'}</strong><br>
+                        📧 ${student.email || 'No email'}<br>
+                        🎓 ${student.major || 'No major'}<br>
+                        📅 ${student.year || 'No year specified'}
+                    </div>
+                    <div class="student-actions">
+                        <button class="btn btn-primary btn-sm" onclick="editStudent(${student.studentid})">
+                            ✏️ Edit
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteStudent(${student.studentid})">
+                            🗑️ Delete
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `<div class="students-grid">${studentsHTML}</div>`;
+        }
+
+        function filterStudents() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredStudents = allStudents.filter(student => 
+                student.studentid.toString().includes(searchTerm) ||
+                (student.firstName && student.firstName.toLowerCase().includes(searchTerm)) ||
+                (student.lastName && student.lastName.toLowerCase().includes(searchTerm)) ||
+                (student.email && student.email.toLowerCase().includes(searchTerm)) ||
+                (student.major && student.major.toLowerCase().includes(searchTerm))
+            );
+            displayStudents(filteredStudents);
+        }
+
+        function openAddModal() {
+            isEditMode = false;
+            editingStudentId = null;
+            document.getElementById('modalTitle').textContent = 'Add New Student';
+            document.getElementById('submitBtn').textContent = 'Save Student';
+            document.getElementById('studentId').readOnly = false;
+            resetForm();
+            document.getElementById('studentModal').style.display = 'block';
+        }
+
+        function editStudent(studentId) {
+            const student = allStudents.find(s => s.studentid == studentId);
+            if (!student) return;
+
+            isEditMode = true;
+            editingStudentId = studentId;
+            document.getElementById('modalTitle').textContent = 'Edit Student';
+            document.getElementById('submitBtn').textContent = 'Update Student';
+            document.getElementById('studentId').readOnly = true;
+
+            // Populate form
+            document.getElementById('studentId').value = student.studentid;
+            document.getElementById('firstName').value = student.firstName || '';
+            document.getElementById('lastName').value = student.lastName || '';
+            document.getElementById('email').value = student.email || '';
+            document.getElementById('major').value = student.major || '';
+            document.getElementById('year').value = student.year || '';
+
+            document.getElementById('studentModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('studentModal').style.display = 'none';
+            resetForm();
+        }
+
+        function resetForm() {
+            document.getElementById('studentForm').reset();
+        }
+
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = type;
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Form submission
+        document.getElementById('studentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                studentid: parseInt(document.getElementById('studentId').value),
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                major: document.getElementById('major').value,
+                year: document.getElementById('year').value
+            };
+
+            if (isEditMode) {
+                // For simplicity, we'll update the entire record by re-posting it
+                // In a real application, you might want to update individual fields
+                saveStudent(formData);
+            } else {
+                saveStudent(formData);
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('studentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
