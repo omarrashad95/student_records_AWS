@@ -9,7 +9,7 @@ It leverages AWS managed services to provide scalability, security, and cost eff
 ## Architecture Diagram
 ![AWS Architecture]
 
-<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/4a8ef4fb-7e6b-4b9c-890b-852791a29f14" />
+<img width="1536" height="1024" alt="image" src="https://github.com/omarrashad95/student_records_AWS/blob/main/Architecture.png" />
 
 
 ## Components
